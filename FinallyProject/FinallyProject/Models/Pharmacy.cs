@@ -57,32 +57,36 @@ namespace FinallyProject.Models
                 if (exisistDrug.Name.ToLower() == drugName.ToLower())
                 {
                     saleDrug = exisistDrug;
-                    if (saleDrug.Count >= drugCount)
+                    break;
+                } 
+            }
+            if (saleDrug!=null)
+            {
+                if (saleDrug.Count >= drugCount)
+                {
+                    if ((drugCount * saleDrug.Price <= drugPrice))
                     {
-                        if ((drugCount * saleDrug.Price <= drugPrice))
-                        {
-                            saleDrug.Count -= drugCount;
+                        saleDrug.Count -= drugCount;
 
-                            Helper.Color(ConsoleColor.Blue, $"Satış uğurla baş verdi.Pul qalğınız; {drugPrice - (saleDrug.Price * drugCount)}");
-                        }
-                        else
-                        {
-
-                            Helper.Color(ConsoleColor.Blue, $"{(saleDrug.Price * drugCount) - drugPrice}  qədər pulunuz çatmır");
-                        }
+                        Helper.Color(ConsoleColor.Blue, $"Satış uğurla baş verdi.Pul qalğınız; {drugPrice - (saleDrug.Price * drugCount)}");
                     }
                     else
                     {
-                        Helper.Color(ConsoleColor.Blue, $"Anbarda {drugCount - saleDrug.Count} sayda dərman qalıb");
+
+                        Helper.Color(ConsoleColor.Blue, $"{(saleDrug.Price * drugCount) - drugPrice}  qədər pulunuz çatmır");
                     }
                 }
                 else
                 {
+                    Helper.Color(ConsoleColor.Blue, $"Anbarda {drugCount-saleDrug.Count} sayda dərman qalıb");
+                }
+            }
+                else
+                {
                     Helper.Color(ConsoleColor.Red, $"{ saleDrug.Name.ToUpper()} adlı dərman tapılmadı");
                 }
-
             }
         }
     }
-}
+
 
